@@ -1,4 +1,10 @@
 /*
+This file is comprised of SQL queries pertaining to COVID-19 information from January 3rd, 2020 to March 29, 2023 based on data from 
+https://ourworldindata.org/covid-deaths. This project follows along with a tutorial from "Alex The Analyst" on Youtube in his "Data Analytics Bootcamp" playlist.
+*/
+
+
+/*
 Covid 19 Data Exploration 
 Skills used: Joins, CTE's, Temp Tables, Windows Functions, Aggregate Functions, Creating Views, Converting Data Types
 */
