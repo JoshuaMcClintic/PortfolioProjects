@@ -196,3 +196,42 @@ Where deaths.continent is not null
 
 Select *
 From PortfolioProject..PercentPopulationVaccinated
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+/*
+These specific queries use the same data as above, but are the only ones used in the Tableau visualization found at 
+https://public.tableau.com/app/profile/joshua.mcclintic/viz/COVID_PortfolioProject_Tableau/Dashboard1?publish=yes
+They have been seperated because Tableau Public cannot connect to SQL servers.
+*/
+
+
+--Global Numbers
+
+Select SUM(new_cases) TotalCases, SUM(cast(new_deaths as int)) TotalDeaths, SUM(cast(new_deaths as int))/SUM(new_cases)*100 DeathPercentage
+From PortfolioProject..CovidDeaths
+Where continent is not null
+Order by 1,2
+
+--Numbers by continent
+
+Select location, SUM(cast(new_deaths as int)) TotalDeaths
+From PortfolioProject..CovidDeaths
+Where continent is null
+and location not in ('World', 'European Union', 'International')
+Group by location
+order by TotalDeaths
+
+-- Countries with Highest Infection Rate compared to Population
+
+Select location, population, MAX(total_cases) HighestInfectionCount, MAX((total_cases/population))*100 PercentPopulationInfected
+From PortfolioProject..CovidDeaths
+Group by location, population
+Order by PercentPopulationInfected desc
+
+-- Same as above, but added dates; Seperated for ease of use
+
+Select location, population, date, MAX(total_cases) HighestInfectionCount, MAX((total_cases/population))*100 PercentPopulationInfected
+From PortfolioProject..CovidDeaths
+Group by location, population, date
+Order by PercentPopulationInfected desc
